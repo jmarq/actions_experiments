@@ -1,0 +1,30 @@
+# this action will run after the `echo` action.
+# this can be accomplished by using a trigger
+
+name: after-echo
+
+on:
+  workflow_run:
+    workflows: ["echo"]
+    types:
+      - completed
+
+jobs:
+  after-echo-success:
+      runs-on: ubuntu-latest
+      # check if the workflow run was successful
+      if: ${{ github.event.workflow_run.conclusion == 'success' }}
+      steps:
+        - name: after-echo-message
+          run: echo "the echo message ran successfully and triggered this workflow
+        - name: echo-workflow-status
+          run: echo "the echo workflow status was ${{ github.event.workflow_run.conclusion }}"
+  after-echo-failure:
+      runs-on: ubuntu-latest
+      # check if the workflow run was a failure
+      if: ${{ github.event.workflow_run.conclusion != 'success' }}
+      steps:
+          - name: after-echo-message
+            run: echo "something went wrong in the echo workflow"
+          - name: echo-workflow-status
+            run: echo "the echo workflow status was ${{ github.event.workflow_run.conclusion }}"
