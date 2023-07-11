@@ -16,7 +16,7 @@ jobs:
       if: ${{ github.event.workflow_run.conclusion == 'success' }}
       steps:
         - name: after-echo-message
-          run: echo "the echo message ran successfully and triggered this workflow
+          run: echo "the echo message ran successfully and triggered this workflow"
         - name: echo-workflow-status
           run: echo "the echo workflow status was ${{ github.event.workflow_run.conclusion }}"
   after-echo-failure:
