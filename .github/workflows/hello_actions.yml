@@ -1,0 +1,35 @@
+# let's set up a basic action to demonstrate some basic syntax/functionality.
+# this action will echo an environment variable when triggered manually
+
+# first, we need to define the action
+# we'll call it "echo"
+
+name: echo
+
+# next, we need to define the action's trigger
+# we can use the workflow dispatch (manual trigger) event
+# we'll also define the action's input
+# we'll call it "message" and set the default value to "hello world"
+
+on:
+  workflow_dispatch:
+    inputs:
+      message:
+        description: 'Message to echo'
+        required: true
+        default: 'hello world'
+
+# now, we need to define the action's steps
+# we'll use the "run" step, which means that the action will run a command
+# we'll use the "echo" command to echo the value of the "message" input
+
+jobs:
+  echo_message:
+    runs-on: ubuntu-latest
+    name: Echo message
+    # we'll add a message suffix via an environment variable
+    env:
+      MESSAGE_SUFFIX: ' from GitHub Actions'
+    # just a single step. the `run` parameter is the command to run
+    steps:
+      - run: echo ${{ inputs.message }} $MESSAGE_SUFFIX
